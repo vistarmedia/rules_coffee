@@ -76,9 +76,11 @@ def coffee_test(name, **kwargs):
 
 def cjsx_test(name, **kwargs):
   src_name = name + '.js_src'
+  requires = kwargs.pop('requires', [])
   cjsx_srcs(name=src_name, srcs=kwargs.pop('srcs'))
 
   js_test(
-    name  = name,
-    srcs  = [src_name],
+    name = name,
+    srcs = [src_name],
+    requires = requires,
     **kwargs)
