@@ -31,6 +31,7 @@ def coffee_library(name, **kwargs):
   js_library(
     name = name,
     srcs = [src_name],
+    compile_type = ['.js'],
     **kwargs)
 
 
@@ -41,6 +42,7 @@ def cjsx_library(name, **kwargs):
   js_library(
     name = name,
     srcs = [src_name],
+    compile_type = ['.js'],
     **kwargs)
 
 
