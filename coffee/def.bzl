@@ -1,5 +1,5 @@
-load('@io_bazel_rules_js//js:def.bzl', 'npm_install')
-load('@io_bazel_rules_js//js:def.bzl',
+load('@com_vistarmedia_rules_js//js:def.bzl', 'npm_install')
+load('@com_vistarmedia_rules_js//js:def.bzl',
   'js_binary',
   'js_library',
   'js_test')

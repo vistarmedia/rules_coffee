@@ -1,5 +1,5 @@
-coffee_src_type = FileType(['.coffee'])
-cjsx_src_type   = FileType(['.cjsx', '.coffee'])
+coffee_src_type = ['.coffee']
+cjsx_src_type   = ['.cjsx', '.coffee']
 
 
 def _coffee_compile_dir(ctx, dir, srcs):
@@ -122,7 +122,7 @@ def cjsx_src_impl(ctx):
 
 attrs = {
   '_node':  attr.label(
-    default     = Label('@io_bazel_rules_js//js/toolchain:node'),
+    default     = Label('@com_vistarmedia_rules_js//js/toolchain:node'),
     cfg         = 'host',
     executable  = True,
     allow_files = True),
