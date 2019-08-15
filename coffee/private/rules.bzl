@@ -128,44 +128,44 @@ attrs = {
     allow_files = True),
 }
 
-coffee_attrs = attrs + {
-  '_csc': attr.label(
+coffee_attrs = dict(attrs,
+  _csc = attr.label(
     default    = Label('//coffee/toolchain:csc'),
     executable = True,
     cfg        = 'host'),
-}
+)
 
-cjsx_attrs = attrs + {
-  '_cjsxc': attr.label(
+cjsx_attrs = dict(attrs,
+  _cjsxc = attr.label(
     default    = Label('//coffee/toolchain:cjsxc'),
     executable = True,
     cfg        = 'host'),
-}
+)
 
 coffee_srcs = rule(
   coffee_srcs_impl,
-  attrs = coffee_attrs + {
-    'srcs': attr.label_list(allow_files=coffee_src_type),
-  },
+  attrs = dict(coffee_attrs,
+    srcs = attr.label_list(allow_files=coffee_src_type),
+  ),
 )
 
 coffee_src = rule(
   coffee_src_impl,
-  attrs = coffee_attrs + {
-    'src': attr.label(allow_files=coffee_src_type),
-  },
+  attrs = dict(coffee_attrs,
+    src = attr.label(allow_files=coffee_src_type),
+  ),
 )
 
 cjsx_srcs = rule(
   cjsx_srcs_impl,
-  attrs = cjsx_attrs + {
-    'srcs': attr.label_list(allow_files=cjsx_src_type),
-  },
+  attrs = dict(cjsx_attrs,
+    srcs = attr.label_list(allow_files=cjsx_src_type),
+  ),
 )
 
 cjsx_src = rule(
   cjsx_src_impl,
-  attrs = cjsx_attrs + {
-    'src': attr.label(allow_files=cjsx_src_type),
-  },
+  attrs = dict(cjsx_attrs,
+    src = attr.label(allow_files=cjsx_src_type),
+  ),
 )
