@@ -78,16 +78,20 @@ def coffee_compile(ctx, srcs):
   for src in srcs:
     dir = src.dirname
     if dir not in srcs_by_dir:
-      srcs_by_dir[dir] = depset([src], order='postorder')
+      srcs_by_dir[dir] = [src]
     else:
-      srcs_by_dir[dir] += [src]
+      srcs_by_dir[dir].append(src)
 
-  files = depset(order='postorder')
+  outputs = []
   for dir in srcs_by_dir:
-    files += _coffee_compile_dir(ctx, dir, srcs_by_dir[dir])
+    outputs += _coffee_compile_dir(ctx, dir, srcs_by_dir[dir])
 
-  runfiles = ctx.runfiles(collect_default=True)
-  return struct(files=files, runfiles=runfiles)
+  return [
+    DefaultInfo(
+      files = depset(outputs),
+      runfiles = ctx.runfiles(collect_default=True),
+    )
+  ]
 
 
 def cjsx_compile(ctx, srcs):
@@ -95,15 +99,15 @@ def cjsx_compile(ctx, srcs):
   for src in srcs:
     dir = src.dirname
     if dir not in srcs_by_dir:
-      srcs_by_dir[dir] = depset([src], order='postorder')
+      srcs_by_dir[dir] = [src]
     else:
-      srcs_by_dir[dir] += [src]
+      srcs_by_dir[dir].append(src)
 
-  files = depset()
+  outputs = []
   for dir in srcs_by_dir:
-    files += _cjsx_compile_dir(ctx, dir, srcs_by_dir[dir])
+    outputs += _cjsx_compile_dir(ctx, dir, srcs_by_dir[dir])
 
-  return struct(files=files)
+  return [DefaultInfo(files = depset(outputs))]
 
 
 def coffee_srcs_impl(ctx):
