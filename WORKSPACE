@@ -1,1 +1,1 @@
-workspace(name='com_vistarmedia_rules_coffee')
+workspace(name = "com_vistarmedia_rules_coffee")
