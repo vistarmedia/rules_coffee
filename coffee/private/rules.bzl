@@ -20,16 +20,17 @@ def _coffee_compile_dir(ctx, dir, srcs):
 
   for src in srcs:
     js_name = src.basename.replace('.coffee', '.js')
-    output  = ctx.new_file(js_name)
+    output  = ctx.actions.declare_file(js_name)
 
     arguments.append(src.short_path)
     outputs.append(output)
 
-  ctx.action(
+  ctx.actions.run(
     mnemonic   = 'CompileCoffeeScript',
     executable = ctx.executable._csc,
     arguments  = arguments,
-    inputs     = list(srcs + [ctx.executable._node]),
+    inputs     = srcs,
+    tools      = [ctx.executable._node],
     outputs    = outputs,
   )
 
@@ -52,15 +53,16 @@ def _cjsx_compile_dir(ctx, dir, srcs):
     else:
       fail('%s has unknown ext "%s"' % (src.short_path, src.extension))
 
-    output = ctx.new_file(js_name)
+    output = ctx.actions.declare_file(js_name)
     outputs.append(output)
     arguments.append('%s=%s' % (src.path, output.path))
 
-  ctx.action(
+  ctx.actions.run(
     mnemonic   = 'CompileCJSX',
     executable = ctx.executable._cjsxc,
     arguments  = arguments,
-    inputs     = list(srcs + [ctx.executable._node]),
+    inputs     = srcs,
+    tools      = [ctx.executable._node],
     outputs    = outputs,
   )
 
