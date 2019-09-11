@@ -1,1 +1,1 @@
-require('coffee-script/lib/coffee-script/command').run();
+require("coffee-script/lib/coffee-script/command").run();
