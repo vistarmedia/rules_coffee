@@ -1,6 +1,7 @@
 var fs = require("fs");
 var mkdirp = require("mkdirp");
 var path = require("path");
+var splitshot = require("@hulu/splitshot");
 
 var compileCJSX = require("coffee-react-transform");
 var compileCoffee = require("coffee-script").compile;
@@ -15,12 +16,17 @@ mkdirp(outDir, function(err) {
   for (var i = 3; i < process.argv.length; i++) {
     var files = process.argv[i].split("=");
     var srcFile = files[0];
-    var dstFile = files[1];
+    var jsFile = files[1];
+    var dtsFile = files[2];
 
     var coffeeSrc = compileCJSX(fs.readFileSync(srcFile, "utf8"));
     var opts = { inlineMap: true, sourceRoot: srcFile };
     var jsSrc = compileCoffee(coffeeSrc, opts);
+    fs.writeFileSync(jsFile, jsSrc, "");
 
-    fs.writeFileSync(dstFile, jsSrc, "");
+    if (dtsFile) {
+      var dtsSrc = splitshot.generateDeclarations(coffeeSrc);
+      fs.writeFileSync(dtsFile, dtsSrc, "");
+    }
   }
 });

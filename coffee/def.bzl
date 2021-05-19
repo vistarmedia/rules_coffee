@@ -9,8 +9,6 @@ load(
     "//coffee/private:rules.bzl",
     "cjsx_src",
     "cjsx_srcs",
-    "coffee_src",
-    "coffee_srcs",
 )
 
 def coffee_repositories():
@@ -25,17 +23,6 @@ def coffee_repositories():
         sha256 = "6519abf3c62ae16e7745d6f197ec062533277559f042ca1dc615bfe08ef4fe1d",
     )
 
-def coffee_library(name, **kwargs):
-    src_name = name + ".js_src"
-    coffee_srcs(name = src_name, srcs = kwargs.pop("srcs"))
-
-    js_library(
-        name = name,
-        srcs = [src_name],
-        compile_type = [".js"],
-        **kwargs
-    )
-
 def cjsx_library(name, **kwargs):
     src_name = name + ".js_src"
     cjsx_srcs(name = src_name, srcs = kwargs.pop("srcs"))
@@ -47,6 +34,8 @@ def cjsx_library(name, **kwargs):
         **kwargs
     )
 
+coffee_library = cjsx_library
+
 def cjsx_binary(name, **kwargs):
     src_name = name + ".js_src"
     cjsx_src(name = src_name, src = kwargs.pop("src"))
@@ -57,30 +46,12 @@ def cjsx_binary(name, **kwargs):
         **kwargs
     )
 
-def coffee_binary(name, **kwargs):
-    src_name = name + ".js_src"
-    coffee_src(name = src_name, src = kwargs.pop("src"))
-
-    js_binary(
-        name = name,
-        src = src_name,
-        **kwargs
-    )
-
-def coffee_test(name, **kwargs):
-    src_name = name + ".js_src"
-    coffee_srcs(name = src_name, srcs = kwargs.pop("srcs"))
-
-    js_test(
-        name = name,
-        srcs = [src_name],
-        **kwargs
-    )
+coffee_binary = cjsx_binary
 
 def cjsx_test(name, **kwargs):
     src_name = name + ".js_src"
     requires = kwargs.pop("requires", [])
-    cjsx_srcs(name = src_name, srcs = kwargs.pop("srcs"))
+    cjsx_srcs(name = src_name, srcs = kwargs.pop("srcs"), generate_dts = False)
 
     js_test(
         name = name,
@@ -88,3 +59,5 @@ def cjsx_test(name, **kwargs):
         requires = requires,
         **kwargs
     )
+
+coffee_test = cjsx_test
