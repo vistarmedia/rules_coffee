@@ -7,7 +7,7 @@ var compileCJSX = require("coffee-react-transform");
 var compileCoffee = require("coffee-script").compile;
 
 var outDir = process.argv[2];
-mkdirp(outDir, function(err) {
+mkdirp(outDir, function (err) {
   if (err) {
     console.error(err);
     process.exit(1);
