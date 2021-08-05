@@ -30,7 +30,7 @@ def cjsx_library(name, **kwargs):
     js_library(
         name = name,
         srcs = [src_name],
-        compile_type = [".js"],
+        compile_type = [".js", ".d.ts"],
         **kwargs
     )
 

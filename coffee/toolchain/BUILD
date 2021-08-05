@@ -7,7 +7,8 @@ js_binary(
     deps = [
         "@coffee.react.transform//:lib",
         "@coffee.script//:lib",
-        "@hulu.splitshot//:lib",
+        "@splitshot//:lib",
+        # "@hulu.splitshot//:lib",
         "@mkdirp//:lib",
     ],
 )
