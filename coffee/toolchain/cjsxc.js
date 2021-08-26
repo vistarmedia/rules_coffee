@@ -1,7 +1,7 @@
 var fs = require("fs");
 var mkdirp = require("mkdirp");
 var path = require("path");
-var splitshot = require("@hulu/splitshot");
+var splitshot = require("./splitshot");
 
 var compileCJSX = require("coffee-react-transform");
 var compileCoffee = require("coffee-script").compile;
@@ -25,13 +25,7 @@ mkdirp(outDir, function (err) {
     fs.writeFileSync(jsFile, jsSrc, "");
 
     if (dtsFile) {
-      // TODO:  this breaks on destructured imports... which we use everywhere
       var dtsSrc = splitshot.generateDeclarations(coffeeSrc);
-      /* const dtsSrc = `
-        export type __export = any;
-        declare const __export__: __export;
-        export default __export__;
-      `; */
       fs.writeFileSync(dtsFile, dtsSrc, "");
     }
   }
